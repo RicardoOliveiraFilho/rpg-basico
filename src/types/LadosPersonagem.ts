@@ -1,0 +1,1 @@
+export type LadosPersonagem = 'esquerdo' | 'frente' | 'direito' | 'costas';

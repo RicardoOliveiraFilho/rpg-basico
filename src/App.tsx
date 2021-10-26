@@ -1,26 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from 'react';
+import * as Style from './App.styles';
+import { usePersonagem } from './hooks/usePersonagem';
+import { Personagem } from './components/Personagem';
 
-function App() {
+export default function App() {
+  const personagem = usePersonagem('Michelle');
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function handleKeyDown(event: KeyboardEvent) {
+    switch (event.code) {
+      case 'KeyA':
+      case 'ArrowLeft':
+        personagem.moverParaEsquerda();
+        break;
+    
+      case 'KeyW':
+      case 'ArrowUp':
+        personagem.moverParaCima();
+        break;
+
+      case 'KeyD':
+      case 'ArrowRight':
+        personagem.moverParaDireita();
+        break;
+      
+      case 'KeyS':
+      case 'ArrowDown':
+        personagem.moverParaBaixo();
+        break;
+    }
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Style.Container>
+      <Style.AreaMapa>
+        <Personagem
+          nome={personagem.nome}
+          coordX={personagem.posicaoCoordX}
+          coordY={personagem.posicaoCoordY}
+          ladoPersonagem={personagem.lado}
+        />
+      </Style.AreaMapa>
+    </Style.Container>
   );
 }
-
-export default App;
